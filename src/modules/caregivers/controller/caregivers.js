@@ -36,6 +36,7 @@ export const addPatientDoctor = asyncHandler(async (req, res, next) => {
 
 //guardian scan qrCode patient
 export const addPatientGuardian = asyncHandler(async (req, res, next) => {
+    const {guardianId}=req.params
     const { patientId } = req.params;
     const patient = await patientModel.findById(patientId)
     if (!patient) {
@@ -45,12 +46,12 @@ export const addPatientGuardian = asyncHandler(async (req, res, next) => {
         return next(new Error("No login", { cause: 404 }))
     
     }
-    const guardian = await guardianModel.findById(req.guardian._id)
+    const guardian = await guardianModel.findById(guardianId)
    
-    patient.guardianIds.push([req.guardian._id])
-    await patient.save()
-    guardian.patientId=patientId
-    await guardian.save()
+    patient.guardianIds.push([guardianId])
+     await patient.save()
+     guardian.patientId=patientId
+     await guardian.save()
     return res.status(201).json({ message: 'Done', patient })
 })
 

@@ -13,16 +13,16 @@ const router = Router();
 router.get("/", complaintController.getComplaintModule)
 
 
-router.post("/complaintPatient",authPatient,
-validation(validators.complaint),
+router.post("/complaintPatient/:patientId",
+//validation(validators.complaint),
 complaintController.sendComplaintPatient)
 
-router.post("/complaintDoctor",authDoctor, 
-validation(validators.complaint),
+router.post("/complaintDoctor/:doctorId", 
+//validation(validators.complaint),
 complaintController.sendComplaintDoctor)
 
-router.post("/complaintGuardian",authGuardian, 
-validation(validators.complaint),
+router.post("/complaintGuardian/:guardianId", 
+//validation(validators.complaint),
 complaintController.sendComplaintGuardian)
 
 

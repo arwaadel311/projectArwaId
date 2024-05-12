@@ -21,18 +21,21 @@ patientController.loginPatient)
 router.post('/logoutPatient',authPatient,
 patientController.logoutPatient)
 //confirm email
-router.put('/confirmEmailPatient',
-validation(validators.sendCodeEmail),
+router.put('/confirmEmailPatient/:patientId',
+//validation(validators.sendCodeEmail),
 patientController.confirmEmailPatient)
 
 
+// router.put('/confirmEmailPatient',
+// //validation(validators.sendCodeEmail),
+// patientController.confirmEmailPatient)
 //profile
 router.get("/home/profile/:patientId",patientController.profilePatient)
 
 
-router.patch("/patientQR",authPatient,patientController.QRPatient)
+router.patch("/patientQR/:patientId",patientController.QRPatient)
 
-router.get("/qr/QR",authPatient,patientController.GetQRPatient)
+router.get("/patientQR/:patientId",patientController.QRPatient)
 
 router.patch("/sendCodeEmail",
 validation(validators.sendCodeEmailAgain),

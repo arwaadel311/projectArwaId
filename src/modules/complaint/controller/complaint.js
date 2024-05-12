@@ -13,11 +13,13 @@ export const getComplaintModule = asyncHandler(async (req, res, next) => {
   const Complaints = await complaintModel.find()
   return res.status(201).json({ message: 'Done', Complaints })
 });
+
 //doctor send complaint
 export const sendComplaintDoctor = asyncHandler(async (req, res, next) => {
  // const { email, complaint } = req.body;
+ const{doctorId}=req.params
  const {  complaint } = req.body;
-  const doctor = await doctorModel.findById(req.doctor._id)
+  const doctor = await doctorModel.findById(doctorId)
   if (!doctor) {
     return next(new Error("Not  llp register account", { cause: 404 }))
   }
@@ -31,8 +33,9 @@ export const sendComplaintDoctor = asyncHandler(async (req, res, next) => {
 //patient send complaint
 export const sendComplaintPatient = asyncHandler(async (req, res, next) => {
 
+  const{patientId}=req.params
   const {  complaint } = req.body;
-  const patient = await patientModel.findById(req.patient._id)
+  const patient = await patientModel.findById(patientId)
   if (!patient) {
     return next(new Error("Not register account", { cause: 404 }))
   }
@@ -46,9 +49,9 @@ export const sendComplaintPatient = asyncHandler(async (req, res, next) => {
 
 //guardian send complaint
 export const sendComplaintGuardian = asyncHandler(async (req, res, next) => {
-
+const {guardianId}=req.params
   const {  complaint } = req.body;
-  const guardian = await guardianModel.findById(req.guardian._id)
+  const guardian = await guardianModel.findById(guardianId)
   if (!guardian) {
     return next(new Error("Not register account", { cause: 404 }))
   }

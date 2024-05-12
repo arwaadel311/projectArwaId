@@ -128,8 +128,24 @@ export const signupPatient = asyncHandler(async (req, res, next) => {
     })
     return res.status(201).json({ message: "Done", _id })
 })
-//confirm Email
+// //confirm Email
+// export const confirmEmailPatient = asyncHandler(async (req, res, next) => {
+//     const { emailCode } = req.body
+//     const patient = await patientModel.findOne({ emailCode })
+//     if (!patient) {
+//         return next(new Error('In-valid account', { cause: 400 }))
+//     }
+//     if (patient.emailCode !== parseInt(emailCode)) {
+//         return next(new Error('In-valid reset code', { cause: 400 }))
+//     }
+//     patient.emailCode = null;
+//     patient.confirmEmail = true
+//     await patient.save()
+//     return res.status(200).json({ message: "Done" })
+// })
+
 export const confirmEmailPatient = asyncHandler(async (req, res, next) => {
+    const{patientId}=req.params
     const { emailCode } = req.body
     const patient = await patientModel.findOne({ emailCode })
     if (!patient) {
@@ -210,8 +226,9 @@ export const profilePatient = asyncHandler(async (req, res, next) => {
 })
 // Generate QR Patient 
 export const QRPatient = asyncHandler(async (req, res, next) => {
-    const patient = await patientModel.findById(req.patient._id)
-    QRCode.toDataURL(`${req.protocol}://${req.headers.host}/caregivers/${req.patient._id}`,
+    const {patientId}=req.params
+    const patient = await patientModel.findById(patientId)
+    QRCode.toDataURL(`${req.protocol}://${req.headers.host}/caregivers/${patientId}`,
         { type: 'terminal' },
 
         function (err, url) {
@@ -219,7 +236,7 @@ export const QRPatient = asyncHandler(async (req, res, next) => {
 
                 message: "Done QR",
                 url,
-                link: `${req.protocol}://${req.headers.host}/caregivers/${req.patient._id}`,
+                link: `${req.protocol}://${req.headers.host}/caregivers/${patientId}`,
             })
         })
         //console.log(url);
