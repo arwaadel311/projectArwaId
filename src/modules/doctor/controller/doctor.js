@@ -11,8 +11,8 @@ import seizureModel from "../../../../DB/model/seizure.model.js";
 
 //all doctors
 export const doctors = async (req, res, next) => {
-    const doctors = await doctorModel.find().select(' -password -confirmEmail -emailCode -verifyEmail -EmailPasswordCode -isLogin -createdAt -updatedAt')
-    .populate({ path: 'patientId', select: 'firstName lastName email  phone_one' })
+     const doctors = await doctorModel.find().select(' -password -confirmEmail -emailCode -verifyEmail -EmailPasswordCode -isLogin -createdAt -updatedAt')
+    .populate({ path: 'patientId', select: 'firstName lastName email  phone_one guardianIds' })
     return res.status(200).json({ message: "Done", doctors })
 }
 
