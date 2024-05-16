@@ -57,7 +57,7 @@ export const deleteDoctor = asyncHandler(async (req, res, next) => {
 })
 //signUp
 export const signupDoctor = asyncHandler(async (req, res, next) => {
-    const { firstName, lastName, clinicAddress, phone_one, phone_two, unionCard, certificate, specialization, email, password } = req.body
+    const { firstName, lastName, clinicAddress, phone_one, phone_two, specialization, email, password } = req.body
     //check email exist
     const checkDoctor = await doctorModel.findOne({ email: email.toLowerCase() })
     const checkAdmin = await adminModel.findOne({ email: email.toLowerCase() })
@@ -155,15 +155,15 @@ export const signupDoctor = asyncHandler(async (req, res, next) => {
     ///hash password
     const hashPassword = hash({ plaintext: password })
     //save//create doctor 
-    const { secure_url, public_id } = await cloudinary.uploader.upload(req.files?.certificate[0].path,
-        { folder: `${process.env.APP_NAME}/doctor/certificate` })
-    req.body.certificate = { secure_url, public_id }
-    const { url, id } = await cloudinary.uploader.upload(req.files?.unionCard[0].path,
-        { folder: `${process.env.APP_NAME}/doctor/unionCard` })
-    req.body.unionCard = { url, id }
+    // const { secure_url, public_id } = await cloudinary.uploader.upload(req.files?.certificate[0].path,
+    //     { folder: `${process.env.APP_NAME}/doctor/certificate` })
+    // req.body.certificate = { secure_url, public_id }
+    // const { url, id } = await cloudinary.uploader.upload(req.files?.unionCard[0].path,
+    //     { folder: `${process.env.APP_NAME}/doctor/unionCard` })
+    // req.body.unionCard = { url, id }
     const { _id } = await doctorModel.create({
         firstName, lastName, clinicAddress, phone_one, phone_two,
-        certificate: { secure_url, public_id }, unionCard: { url, id },
+     //   certificate: { secure_url, public_id }, unionCard: { url, id },
         emailCode, specialization, email, password: hashPassword,
     })
     return res.status(201).json({ message: "Done", _id })

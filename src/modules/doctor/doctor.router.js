@@ -46,10 +46,10 @@ router.get("/getOnePatient/:patientId",doctorController.getDataOnePatient)
 //signUp
 router.post('/signupDoctor',
 
-fileUpload(fileValidation.image).fields([
-    { name: 'certificate', maxCount: 1 },
-    { name: 'unionCard', maxCount: 1 }
-]),
+// fileUpload(fileValidation.image).fields([
+//     { name: 'certificate', maxCount: 1 },
+//     { name: 'unionCard', maxCount: 1 }
+// ]),
 validation(validators.signUpDoctor),
 doctorController.signupDoctor)
 //login
